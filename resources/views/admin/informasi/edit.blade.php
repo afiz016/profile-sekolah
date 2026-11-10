@@ -48,7 +48,7 @@
                         <label for="gambar" class="form-label">Gambar</label>
                         @if($informasi->gambar)
                             <div class="mb-2">
-                                <img src="{{ asset('storage/' . $informasi->gambar) }}" class="img-fluid rounded" style="max-height: 200px;">
+                                <img src="{{ $informasi->gambar_url }}" class="img-fluid rounded" style="max-height: 200px;">
                             </div>
                         @endif
                         <input type="file" class="form-control @error('gambar') is-invalid @enderror" 

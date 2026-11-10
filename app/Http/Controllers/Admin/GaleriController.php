@@ -33,19 +33,13 @@ class GaleriController extends Controller
 
         if ($request->hasFile('gambar')) {
             try {
-                // Pastikan folder ada
-                $directory = storage_path('app/public/galeri');
-                if (!file_exists($directory)) {
-                    mkdir($directory, 0755, true);
-                }
-                
                 $file = $request->file('gambar');
                 
                 // Buat nama file yang unik
                 $filename = time() . '_' . preg_replace('/[^A-Za-z0-9\-\.]/', '', $file->getClientOriginalName());
                 
                 // Simpan file
-                $path = $file->storeAs('galeri', $filename, 'public');
+                $path = $file->storeAs('galeri', $filename, config('filesystems.media_disk'));
                 
                 // Simpan path relatif ke database
                 $data['gambar'] = $path;
@@ -82,15 +76,9 @@ class GaleriController extends Controller
 
         if ($request->hasFile('gambar')) {
             try {
-                // Pastikan folder ada
-                $directory = storage_path('app/public/galeri');
-                if (!file_exists($directory)) {
-                    mkdir($directory, 0755, true);
-                }
-                
                 // Hapus gambar lama jika ada
                 if ($galeri->gambar) {
-                    Storage::disk('public')->delete($galeri->gambar);
+                    Storage::disk(config('filesystems.media_disk'))->delete($galeri->gambar);
                 }
                 
                 $file = $request->file('gambar');
@@ -99,7 +87,7 @@ class GaleriController extends Controller
                 $filename = time() . '_' . preg_replace('/[^A-Za-z0-9\-\.]/', '', $file->getClientOriginalName());
                 
                 // Simpan file
-                $path = $file->storeAs('galeri', $filename, 'public');
+                $path = $file->storeAs('galeri', $filename, config('filesystems.media_disk'));
                 
                 // Simpan path relatif ke database
                 $data['gambar'] = $path;
@@ -121,7 +109,7 @@ class GaleriController extends Controller
     {
         try {
             if ($galeri->gambar) {
-                Storage::disk('public')->delete($galeri->gambar);
+                Storage::disk(config('filesystems.media_disk'))->delete($galeri->gambar);
             }
             $galeri->delete();
             return redirect()->route('admin.galeri.index')->with('success', 'Galeri berhasil dihapus.');

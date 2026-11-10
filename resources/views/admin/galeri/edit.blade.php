@@ -50,7 +50,7 @@
                             <div class="mb-2">
                                 <label class="form-label small text-muted">Gambar Saat Ini:</label>
                                 <div>
-                                    <img src="{{ asset('storage/' . $galeri->gambar) }}" 
+                                    <img src="{{ $galeri->gambar_url }}"
                                          class="img-fluid rounded border" 
                                          style="max-height: 200px;"
                                          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">

@@ -74,7 +74,7 @@
             <div class="col-md-4">
                 <div class="card card-news">
                     @if($info->gambar)
-                        <img src="{{ asset('storage/' . $info->gambar) }}" class="card-img-top" alt="{{ $info->judul }}" loading="lazy">
+                        <img src="{{ $info->gambar_url }}" class="card-img-top" alt="{{ $info->judul }}" loading="lazy">
                     @else
                         <img src="https://images.unsplash.com/photo-1497486751825-1233686d5d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="{{ $info->judul }}" loading="lazy">
                     @endif

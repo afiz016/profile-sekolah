@@ -38,12 +38,12 @@
                     <div class="gallery-card">
                         <div class="gallery-image-container">
                             @if($item->gambar)
-                                <img src="{{ asset('storage/' . $item->gambar) }}" 
+                                <img src="{{ $item->gambar_url }}"
                                      class="gallery-image" 
                                      alt="{{ $item->judul }}" 
                                      data-bs-toggle="modal" 
                                      data-bs-target="#galleryModal"
-                                     data-image="{{ asset('storage/' . $item->gambar) }}"
+                                     data-image="{{ $item->gambar_url }}"
                                      data-title="{{ $item->judul }}"
                                      data-description="{{ $item->deskripsi }}"
                                      onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';">

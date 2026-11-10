@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Galeri extends Model
 {
@@ -31,5 +32,12 @@ class Galeri extends Model
     public function scopeByKategori($query, $kategori)
     {
         return $query->where('kategori', $kategori);
+    }
+
+    public function getGambarUrlAttribute(): ?string
+    {
+        return $this->gambar
+            ? Storage::disk(config('filesystems.media_disk'))->url($this->gambar)
+            : null;
     }
 }

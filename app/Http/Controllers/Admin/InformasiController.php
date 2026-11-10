@@ -32,19 +32,13 @@ class InformasiController extends Controller
 
         if ($request->hasFile('gambar')) {
             try {
-                // Pastikan folder ada
-                $directory = storage_path('app/public/informasi');
-                if (!file_exists($directory)) {
-                    mkdir($directory, 0755, true);
-                }
-                
                 $file = $request->file('gambar');
                 
                 // Buat nama file yang unik
                 $filename = time() . '_' . preg_replace('/[^A-Za-z0-9\-\.]/', '', $file->getClientOriginalName());
                 
                 // Simpan file
-                $path = $file->storeAs('informasi', $filename, 'public');
+                $path = $file->storeAs('informasi', $filename, config('filesystems.media_disk'));
                 
                 // Simpan path relatif ke database
                 $data['gambar'] = $path;
@@ -80,15 +74,9 @@ class InformasiController extends Controller
 
         if ($request->hasFile('gambar')) {
             try {
-                // Pastikan folder ada
-                $directory = storage_path('app/public/informasi');
-                if (!file_exists($directory)) {
-                    mkdir($directory, 0755, true);
-                }
-                
                 // Hapus gambar lama jika ada
                 if ($informasi->gambar) {
-                    Storage::disk('public')->delete($informasi->gambar);
+                    Storage::disk(config('filesystems.media_disk'))->delete($informasi->gambar);
                 }
                 
                 $file = $request->file('gambar');
@@ -97,7 +85,7 @@ class InformasiController extends Controller
                 $filename = time() . '_' . preg_replace('/[^A-Za-z0-9\-\.]/', '', $file->getClientOriginalName());
                 
                 // Simpan file
-                $path = $file->storeAs('informasi', $filename, 'public');
+                $path = $file->storeAs('informasi', $filename, config('filesystems.media_disk'));
                 
                 // Simpan path relatif ke database
                 $data['gambar'] = $path;
@@ -119,7 +107,7 @@ class InformasiController extends Controller
     {
         try {
             if ($informasi->gambar) {
-                Storage::disk('public')->delete($informasi->gambar);
+                Storage::disk(config('filesystems.media_disk'))->delete($informasi->gambar);
             }
             $informasi->delete();
             return redirect()->route('admin.informasi.index')->with('success', 'Informasi berhasil dihapus.');

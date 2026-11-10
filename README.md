@@ -1,6 +1,6 @@
 # Website Profil Sekolah
 
-Website profil sekolah modern yang dibangun dengan Laravel 11, menampilkan informasi sekolah, berita, galeri, dan panel admin yang lengkap.
+Website profil sekolah modern yang dibangun dengan Laravel 12, menampilkan informasi sekolah, berita, galeri, dan panel admin yang lengkap.
 
 ## Fitur Utama
 
@@ -19,7 +19,7 @@ Website profil sekolah modern yang dibangun dengan Laravel 11, menampilkan infor
 
 ## Teknologi
 
-- **Laravel 11** - PHP Framework
+- **Laravel 12** - PHP Framework
 - **Bootstrap 5** - CSS Framework  
 - **SQLite** - Database
 - **Font Awesome** - Icons
@@ -60,6 +60,33 @@ Website profil sekolah modern yang dibangun dengan Laravel 11, menampilkan infor
    ```bash
    php artisan serve
    ```
+
+## Deploy ke Vercel
+
+Deployment menggunakan FrankenPHP dalam container. Database SQLite lokal tidak persisten di Vercel, sehingga siapkan database PostgreSQL Neon dan bucket Cloudflare R2 terlebih dahulu. Setelah mengimpor repository ke Vercel, tambahkan environment variables berikut pada Production dan Preview:
+
+| Variable | Nilai |
+| --- | --- |
+| `APP_KEY` | Hasil `php artisan key:generate --show` |
+| `APP_ENV` | `production` |
+| `APP_DEBUG` | `false` |
+| `APP_URL` | URL deployment Vercel |
+| `DB_CONNECTION` | `pgsql` |
+| `DB_URL` | Connection string Neon dengan `sslmode=require` |
+| `MEDIA_DISK` | `r2` |
+| `R2_ACCESS_KEY_ID` | Access key bucket R2 |
+| `R2_SECRET_ACCESS_KEY` | Secret key bucket R2 |
+| `R2_BUCKET` | Nama bucket |
+| `R2_ENDPOINT` | `https://<account-id>.r2.cloudflarestorage.com` |
+| `R2_PUBLIC_URL` | URL publik bucket atau custom domain |
+
+Jangan masukkan secrets ke Git. Jalankan migrasi terhadap database Neon sekali setelah environment variables tersedia:
+
+```bash
+php artisan migrate --force
+```
+
+Unggahan gambar baru akan disimpan di R2. Gambar yang sebelumnya tersimpan pada disk lokal perlu dipindahkan ke bucket R2 secara terpisah.
 
 ## Login Admin
 

@@ -32,7 +32,7 @@
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 @if($informasi->gambar)
-                    <img src="{{ asset('storage/' . $informasi->gambar) }}" class="img-fluid rounded shadow mb-4" alt="{{ $informasi->judul }}" loading="lazy">
+                    <img src="{{ $informasi->gambar_url }}" class="img-fluid rounded shadow mb-4" alt="{{ $informasi->judul }}" loading="lazy">
                 @endif
                 
                 <div class="article-content">
@@ -51,7 +51,7 @@
                     <div class="col-md-4">
                         <div class="card card-news h-100">
                             @if($post->gambar)
-                                <img src="{{ asset('storage/' . $post->gambar) }}" class="card-img-top" alt="{{ $post->judul }}" loading="lazy">
+                                <img src="{{ $post->gambar_url }}" class="card-img-top" alt="{{ $post->judul }}" loading="lazy">
                             @endif
                             <div class="card-body d-flex flex-column">
                                 <h6 class="card-title">{{ Str::limit($post->judul, 70) }}</h6>

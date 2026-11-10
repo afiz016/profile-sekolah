@@ -27,7 +27,7 @@
                 $hasImage = false;
                 if(!empty($item->gambar)){
                     try {
-                        $hasImage = \Illuminate\Support\Facades\Storage::disk('public')->exists($item->gambar);
+                        $hasImage = \Illuminate\Support\Facades\Storage::disk(config('filesystems.media_disk'))->exists($item->gambar);
                     } catch (Exception $e) {
                         $hasImage = file_exists(public_path('storage/' . $item->gambar));
                     }
@@ -35,7 +35,7 @@
             @endphp
 
             @if($hasImage)
-                <img src="{{ asset('storage/' . $item->gambar) }}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="{{ $item->judul }}">
+                <img src="{{ $item->gambar_url }}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="{{ $item->judul }}">
             @else
                 <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
                     <i class="fas fa-image fa-3x text-muted"></i>
