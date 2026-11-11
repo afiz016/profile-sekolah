@@ -71,8 +71,7 @@ Deployment menggunakan FrankenPHP dalam container. Database SQLite lokal tidak p
 | `APP_ENV` | `production` |
 | `APP_DEBUG` | `false` |
 | `APP_URL` | URL deployment Vercel |
-| `DB_CONNECTION` | `pgsql` |
-| `DB_URL` | Connection string Neon dengan `sslmode=require` |
+| `DATABASE_URL` | Connection string Neon dengan `sslmode=require` |
 | `MEDIA_DISK` | `r2` |
 | `R2_ACCESS_KEY_ID` | Access key bucket R2 |
 | `R2_SECRET_ACCESS_KEY` | Secret key bucket R2 |
@@ -80,7 +79,7 @@ Deployment menggunakan FrankenPHP dalam container. Database SQLite lokal tidak p
 | `R2_ENDPOINT` | `https://<account-id>.r2.cloudflarestorage.com` |
 | `R2_PUBLIC_URL` | URL publik bucket atau custom domain |
 
-Jangan masukkan secrets ke Git. Jalankan migrasi terhadap database Neon sekali setelah environment variables tersedia:
+Laravel otomatis memilih PostgreSQL jika `DATABASE_URL` tersedia. Jangan masukkan secrets ke Git. Jalankan migrasi terhadap database Neon sekali setelah environment variables tersedia:
 
 ```bash
 php artisan migrate --force
